@@ -1,6 +1,5 @@
+import os
 from dash import html, Input, Output, dash_table, callback, dcc, State, Dash
-
-
 
 
 def layout():
@@ -16,6 +15,12 @@ def layout():
 app = Dash()
 app.layout = layout()
 
+server = app.server
+
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    # LOCAL RUN
+    if os.getenv('AWS_EXECUTION_ENV') is None:
+        app.run_server(debug=True)
+    else:
+        app.run_server(host='0.0.0.0', port=8050)
